@@ -25,7 +25,7 @@ export async function adminListAccounts(limit = 100) {
     .limit(limit)
     .toArray();
 
-  return docs.map((doc) => ({
+  return docs.map((doc: any) => ({
     id: doc._id.toHexString(),
     user_id: doc.user_id.toHexString(),
     account_display: doc.account_display_plain,

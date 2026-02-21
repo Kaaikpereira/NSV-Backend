@@ -143,7 +143,7 @@ export async function getTransactionsForUser(
   const docs = await listTransactionsByAccount(accountId, limit);
 
   return Promise.all(
-    docs.map(async (doc) => {
+    docs.map(async (doc: any) => {
       const ctx = {
         userId: user.supabase_user_id, // para SNA
         type: "transaction",

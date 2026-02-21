@@ -1,5 +1,9 @@
 // src/routes/avatar.routes.ts
-import type { FastifyInstance } from "fastify";
+import type {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
 import fastifyMultipart from "@fastify/multipart";
 import { decryptBinaryWithSNA, encryptBinaryWithSNA } from "../sna/sna456-binary";
 import { usersCollection } from "../model/user.model";
@@ -14,7 +18,7 @@ export async function meAvatarRoutes(app: FastifyInstance) {
   app.post(
     "/me/avatar",
     { preHandler: app.authGuard },
-    async (request, reply) => {
+    async (request: FastifyRequest, reply: FastifyReply) => {
       const userId = request.userId;
       if (!userId) {
         return reply.status(401).send({ message: "Unauthorized" });
@@ -67,7 +71,7 @@ export async function meAvatarRoutes(app: FastifyInstance) {
   app.get(
     "/me/avatar",
     { preHandler: app.authGuard },
-    async (request, reply) => {
+    async (request: FastifyRequest, reply: FastifyReply) => {
       const userId = request.userId;
       if (!userId) {
         return reply.status(401).send({ message: "Unauthorized" });

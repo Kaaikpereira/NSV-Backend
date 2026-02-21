@@ -1,11 +1,15 @@
-import type { FastifyInstance } from "fastify";
+import type {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
 import { meHandler, loginHandler, registerHandler } from "../controllers/auth.controller";
 
 export default async function authRoutes(app: FastifyInstance) {
   // ✅ LOGIN - POST /api/auth/login (público)
   app.post(
     "/auth/login",
-    async (request, reply) => {
+    async (request: FastifyRequest, reply: FastifyReply) => {
       await loginHandler(request, reply);
     }
   );
@@ -13,7 +17,7 @@ export default async function authRoutes(app: FastifyInstance) {
   // ✅ REGISTER - POST /api/auth/register (público)
   app.post(
     "/auth/register",
-    async (request, reply) => {
+    async (request: FastifyRequest, reply: FastifyReply) => {
       await registerHandler(request, reply);
     }
   );

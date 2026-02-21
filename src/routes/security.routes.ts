@@ -1,12 +1,16 @@
 // src/routes/security.routes.ts
-import type { FastifyInstance } from "fastify";
+import type {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
 import { listSessionsForUser, revokeSession } from "../model/session.model";
 
 export async function securityRoutes(app: FastifyInstance) {
   app.get(
     "/security/devices",
     { preHandler: app.authGuard },
-    async (req, reply) => {
+    async (req: FastifyRequest, reply: FastifyReply) => {
       if (!req.supabaseUserId) {
         return reply.status(401).send({ error: "Unauthorized" });
       }
@@ -31,7 +35,7 @@ export async function securityRoutes(app: FastifyInstance) {
   app.delete(
     "/security/devices/:id",
     { preHandler: app.authGuard },
-    async (req, reply) => {
+    async (req: FastifyRequest, reply: FastifyReply) => {
       if (!req.supabaseUserId) {
         return reply.status(401).send({ error: "Unauthorized" });
       }

@@ -1,5 +1,9 @@
 // src/routes/accounts.routes.ts
-import type { FastifyInstance } from "fastify";
+import type {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
 import {
   deleteAccountBySupabaseUserId,
   findAccountByDisplay,
@@ -17,7 +21,7 @@ export async function accountsRoutes(app: FastifyInstance) {
   app.get(
     "/accounts/lookup",
     { preHandler: app.authGuard },
-    async (req, reply) => {
+    async (req: FastifyRequest, reply: FastifyReply) => {
       const { account } = req.query as { account?: string };
 
       if (!account) {
@@ -59,7 +63,7 @@ export async function accountsRoutes(app: FastifyInstance) {
   app.delete(
     "/accounts/me",
     { preHandler: app.authGuard },
-    async (req, reply) => {
+    async (req: FastifyRequest, reply: FastifyReply) => {
       if (!req.userId) {
         return reply.code(401).send({ error: "Unauthorized" });
       }

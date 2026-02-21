@@ -16,10 +16,10 @@
     "fastify": "^4.22.0",
     "fastify-plugin": "^5.1.0",
     "mongodb": "^5.7.0",
-    "sna-456": "github:Sphere-Nexon/sna-456"
+    "sna-456": "github:Sphere-Nexon/sna-456",
+    "@types/node": "^20.5.1"
   },
   "devDependencies": {
-    "@types/node": "^20.5.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.0"
