@@ -12,7 +12,7 @@ async function auditCollection() {
 export async function writeAuditLog(log: Omit<AuditLog, "_id">) {
   const col = await auditCollection();
   await col.insertOne({
-    _id: new ObjectId().toHexString(),
+    _id: new ObjectId(),
     ...log,
   });
 }

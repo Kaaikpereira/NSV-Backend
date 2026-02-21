@@ -1,6 +1,6 @@
 // src/services/records.service.ts
 import { ObjectId } from 'mongodb';
-import { getRecordsCollection } from '../infra/mongo/client';
+import { getCollection } from '../infra/mongo/collection';
 import { encryptContext, decryptContext, CipherPayload } from '../sna/sna456';
 
 type CreateRecordInput = {
@@ -9,15 +9,19 @@ type CreateRecordInput = {
   payload: any;
 };
 
+async function recordsCollection() {
+  return getCollection<any>('records');
+}
+
 export async function listRecords(userId: string) {
-  const collection = await getRecordsCollection();
+  const collection = await recordsCollection();
 
   const docs = await collection
     .find({ userId })
     .project({ title: 1, type: 1, createdAt: 1 })
     .toArray();
 
-  return docs.map(doc => ({
+  return docs.map((doc: any) => ({
     id: doc._id.toString(),
     title: doc.title,
     type: doc.type,
@@ -26,7 +30,7 @@ export async function listRecords(userId: string) {
 }
 
 export async function getRecord(userId: string, id: string) {
-  const collection = await getRecordsCollection();
+  const collection = await recordsCollection();
 
   const doc = await collection.findOne({
     _id: new ObjectId(id),
@@ -53,7 +57,7 @@ export async function getRecord(userId: string, id: string) {
 }
 
 export async function createRecord(userId: string, input: CreateRecordInput) {
-  const collection = await getRecordsCollection();
+  const collection = await recordsCollection();
 
   const tempId = new ObjectId(); // já gera ID para usar no contexto
 
