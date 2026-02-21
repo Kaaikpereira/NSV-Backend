@@ -17,9 +17,15 @@ function main() {
       'git config --global --unset-all url.https://github.com/.insteadOf || true',
       'git config --global --unset-all url.git@github.com:.insteadOf || true',
       'git config --global --unset-all url.ssh://git@github.com/.insteadOf || true',
+      'git config --global --unset-all url.git://github.com/.insteadOf || true',
       `git config --global url."${gitUrl}".insteadOf "https://github.com/"`,
       `git config --global url."${gitUrl}".insteadOf "ssh://git@github.com/"`,
       `git config --global url."${gitUrl}".insteadOf "git@github.com:"`,
+      `git config --global url."${gitUrl}Sphere-Nexon/".insteadOf "ssh://git@github.com/Sphere-Nexon/"`,
+      `git config --global url."${gitUrl}Sphere-Nexon/".insteadOf "git@github.com:Sphere-Nexon/"`,
+      `git config --global url."${gitUrl}Sphere-Nexon/sna-456.git".insteadOf "ssh://git@github.com/Sphere-Nexon/sna-456.git"`,
+      `git config --global url."${gitUrl}Sphere-Nexon/sna-456.git".insteadOf "git@github.com:Sphere-Nexon/sna-456.git"`,
+      `git config --global url."${gitUrl}".insteadOf "git://github.com/"`,
     ];
 
     for (const cmd of cmds) {
