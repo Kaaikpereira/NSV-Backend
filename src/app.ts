@@ -53,13 +53,13 @@ export async function buildApp() {
 
 
   // depois de todos os app.register(...)
-app.ready(err => {
-  if (err) {
-    app.log.error(err);
-    return;
-  }
-  app.log.info(app.printRoutes());
-});
+  app.ready((err: unknown) => {
+    if (err) {
+      app.log.error(err);
+      return;
+    }
+    app.log.info(app.printRoutes());
+  });
 
   return app;
 }

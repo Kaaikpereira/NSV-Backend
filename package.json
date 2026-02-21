@@ -16,7 +16,7 @@
     "fastify": "^4.22.0",
     "fastify-plugin": "^5.1.0",
     "mongodb": "^5.7.0",
-    "sna-456": "github:Sphere-Nexon/sna-456",
+    "sna-456": "git+https://github.com/Sphere-Nexon/sna-456.git",
     "@types/node": "^20.5.1"
   },
   "devDependencies": {
