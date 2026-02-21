@@ -18,16 +18,12 @@ export async function buildApp() {
   });
 
   // CORS – precisa vir antes das rotas
- await app.register(cors, {
-   origin: [
-    'http://localhost:8080',
-    'http://192.168.0.72:8080',
-    'http://172.28.99.210:8080'
-  ], // ou true em dev
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // se precisar
-})
+  await app.register(cors, {
+    origin: ['https://nsv-front.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
 
   // opcional, mas ajuda se ainda der 404 no OPTIONS
   //app.options('/*', async (req, reply) => {

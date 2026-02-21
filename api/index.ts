@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { IncomingMessage, ServerResponse } from 'http';
 import { buildApp } from '../src/app';
 
 let appPromise: ReturnType<typeof buildApp> | null = null;
@@ -12,8 +12,7 @@ async function getApp() {
   return app;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: IncomingMessage, res: ServerResponse) {
   const app = await getApp();
   app.server.emit('request', req, res);
 }
-
