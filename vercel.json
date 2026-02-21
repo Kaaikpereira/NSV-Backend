@@ -1,5 +1,4 @@
 {
-  "installCommand": "node scripts/configure-github-token.js && npm install",
+  "installCommand": "node scripts/write-gitconfig.js && GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install",
   "buildCommand": "npm run build"
 }
-
