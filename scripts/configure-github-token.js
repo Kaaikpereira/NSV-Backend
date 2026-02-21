@@ -2,23 +2,40 @@ const { execSync } = require('child_process');
 
 function main() {
   const token = process.env.SNA_GH_TOKEN;
+
   if (!token) {
+    console.warn('SNA_GH_TOKEN não encontrado. Pulando configuração do Git.');
     return;
   }
 
-  const url = `https://x-access-token:${token}@github.com/`;
-  const cmds = [
-    `git config --global url."${url}".insteadOf "https://github.com/"`,
-    `git config --global url."${url}".insteadOf "ssh://git@github.com/"`,
-    `git config --global url."${url}".insteadOf "git@github.com:"`,
-  ];
-
   try {
+    console.log('Configurando Git com token do GitHub para github.com...');
+
+    const gitUrl = `https://x-access-token:${token}@github.com/`;
+
+    const cmds = [
+      'git config --global --unset-all url.https://github.com/.insteadOf || true',
+      'git config --global --unset-all url.git@github.com:.insteadOf || true',
+      'git config --global --unset-all url.ssh://git@github.com/.insteadOf || true',
+      `git config --global url."${gitUrl}".insteadOf "https://github.com/"`,
+      `git config --global url."${gitUrl}".insteadOf "ssh://git@github.com/"`,
+      `git config --global url."${gitUrl}".insteadOf "git@github.com:"`,
+    ];
+
     for (const cmd of cmds) {
-      execSync(cmd, { stdio: 'ignore' });
+      try {
+        execSync(cmd, { stdio: 'ignore', shell: true });
+      } catch {
+        // ignora erros individuais de configuração
+      }
     }
-  } catch {
-    // não falha a instalação se o config der erro
+
+    console.log('Git configurado com sucesso para github.com.');
+  } catch (error) {
+    console.error(
+      'Erro ao configurar Git para github.com:',
+      error && error.message ? error.message : error
+    );
   }
 }
 
