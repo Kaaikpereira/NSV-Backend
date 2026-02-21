@@ -1,5 +1,5 @@
 {
-  "installCommand": "node scripts/write-gitconfig.js && GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install",
+  "installCommand": "node scripts/write-gitconfig.js && GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install && cd node_modules/sna-456 && npm install && npm run build",
   "buildCommand": "npm run build",
   "functions": {
     "api/index.ts": {
