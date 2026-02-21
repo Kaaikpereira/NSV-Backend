@@ -1,0 +1,5 @@
+{
+  "installCommand": "node scripts/configure-github-token.js && npm install",
+  "buildCommand": "npm run build"
+}
+
