@@ -1,5 +1,5 @@
 {
-  "installCommand": "node scripts/write-gitconfig.js && NPM_CONFIG_IGNORE_SCRIPTS=true GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install && node node_modules/typescript/bin/tsc -p node_modules/sna-456/tsconfig.json",
+  "installCommand": "node scripts/write-gitconfig.js && NPM_CONFIG_IGNORE_SCRIPTS=true GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install",
   "buildCommand": "npm run build",
   "functions": {
     "api/index.ts": {
