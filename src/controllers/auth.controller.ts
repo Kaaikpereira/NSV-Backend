@@ -121,10 +121,11 @@ export async function registerHandler(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  const { email, password, displayName } = request.body as { 
-    email: string; 
+  const { email, password, displayName, deviceId } = request.body as {
+    email: string;
     password: string;
     displayName?: string;
+    deviceId?: string;
   };
 
   if (!email || !password) {
@@ -169,6 +170,28 @@ if (signInError || !signInData?.session) {
     error: signInError?.message || "Erro ao gerar token de acesso" 
   });
 }
+
+    // cria sessão como no login (para evitar 401 imediato no próximo passo)
+    const supabaseUserIdForSession = signInData.user?.id || authData.user.id;
+    const dbUser = await findUserBySupabaseId(supabaseUserIdForSession);
+    if (dbUser && signInData.session?.access_token && supabaseUserIdForSession) {
+      const userAgent =
+        (request.headers["user-agent"] as string) || "Desconhecido";
+      const ip =
+        (request.headers["x-forwarded-for"] as string) ||
+        (request.ip as string) ||
+        null;
+
+      await createOrUpdateSession({
+        userId: dbUser._id,
+        supabaseUserId: supabaseUserIdForSession,
+        deviceId: deviceId || "web-default",
+        deviceName: "Navegador Web",
+        userAgent,
+        token: signInData.session.access_token,
+        ip,
+      });
+    }
 
     return reply.status(201).send({
       token: signInData.session.access_token,
