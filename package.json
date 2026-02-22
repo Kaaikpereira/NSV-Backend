@@ -16,7 +16,8 @@
     "dotenv": "^16.3.1",
     "fastify": "^4.22.0",
     "fastify-plugin": "^5.1.0",
-    "mongodb": "^5.7.0"
+    "mongodb": "^5.7.0",
+    "sna-456": "git+https://github.com/Sphere-Nexon/sna-456.git"
   },
   "devDependencies": {
     "ts-node": "^10.9.1",

@@ -1,39 +1,17 @@
+import { SNA456 } from "sna-456";
+
 type BinaryContext = {
   userId: string;
   type: "avatar" | string;
   recordId?: string;
 };
 
-type SnaInstance = {
-  encrypt: (plaintext: string, context: string) => Promise<unknown> | unknown;
-  decrypt: (ciphertext: string, context: string) => Promise<unknown> | unknown;
-};
-
-let snaInstance: SnaInstance | null = null;
-let snaFailed = false;
+let snaInstance: SNA456 | null = null;
 
 function getSna() {
-  if (snaFailed) {
-    return {
-      encrypt: async (plaintext: string) => plaintext,
-      decrypt: async (ciphertext: string) => ciphertext,
-    };
-  }
-
   if (!snaInstance) {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      // @ts-ignore
-      const mod = require("sna-456") as { SNA456: new (key: string) => SnaInstance };
-      const key = process.env.SNA_MASTER_KEY || process.env.SNA_KEY || "dev-sna-key";
-      snaInstance = new mod.SNA456(key);
-    } catch {
-      snaFailed = true;
-      return {
-        encrypt: async (plaintext: string) => plaintext,
-        decrypt: async (ciphertext: string) => ciphertext,
-      };
-    }
+    const key = process.env.SNA_MASTER_KEY || process.env.SNA_KEY || "dev-sna-key";
+    snaInstance = new SNA456(key);
   }
   return snaInstance;
 }
