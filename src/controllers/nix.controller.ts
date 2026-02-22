@@ -79,6 +79,22 @@ export async function nixTransferHandler(
     await encryptContext({ userId: recipientUser!.supabase_user_id, type: "account", recordId: recipientUser!._id.toHexString() }, { balance: newTo })
   );
 
+  await registerTransaction(request.supabaseUserId, {
+    type: "nix",
+    direction: "debit",
+    amount,
+    description,
+  });
+
+  if (recipientUser?.supabase_user_id) {
+    await registerTransaction(recipientUser.supabase_user_id, {
+      type: "nix",
+      direction: "credit",
+      amount,
+      description,
+    });
+  }
+
   // 🔒 AUDIT TRANSFER
   await writeAuditLog({
     actorUserId: request.supabaseUserId,
