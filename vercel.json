@@ -1,11 +1,6 @@
 {
-  "installCommand": "node scripts/write-gitconfig.js && GIT_CONFIG_GLOBAL=$PWD/.gitconfig npm install && cd node_modules/sna-456 && npm install --production=false && npm run build",
+  "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "node_modules/sna-456/**"
-    }
-  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/api" }
   ]
